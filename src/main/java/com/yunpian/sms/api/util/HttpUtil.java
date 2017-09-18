@@ -34,7 +34,9 @@ import java.util.Map;
  * Created by bingone on 15/12/16.
  */
 public class HttpUtil {
+
     public static final int CONNECTION_TIMEOUT = 5000;
+
     public static final int SOCKETCOOECTION_TIMEOUT = 5000;
 
     private static CloseableHttpClient httpClient = createSSLClientDefault();
@@ -81,7 +83,8 @@ public class HttpUtil {
             }
 
             HttpGet method = new HttpGet(url);
-            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT).setSocketTimeout(SOCKETCOOECTION_TIMEOUT).build();//设置请求超时时间
+            RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(CONNECTION_TIMEOUT)
+                    .setSocketTimeout(SOCKETCOOECTION_TIMEOUT).build();//设置请求超时时间
             method.setConfig(requestConfig);
             response = client.execute(method);
             entity = response.getEntity();
@@ -141,7 +144,7 @@ public class HttpUtil {
                     org.apache.http.NameValuePair pair = new BasicNameValuePair(param.getKey(), param.getValue());
                     paramList.add(pair);
                 }
-                method.setEntity(new UrlEncodedFormEntity(paramList, ApiConfig.getEncode()));
+                method.setEntity(new UrlEncodedFormEntity(paramList, ApiConfig.getEncoding()));
             }
             response = client.execute(method);
             entity = response.getEntity();

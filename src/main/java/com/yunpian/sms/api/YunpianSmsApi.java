@@ -16,6 +16,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ import java.util.Map;
  */
 public class YunpianSmsApi {
 
-    // 查账户信息的https地址
+    /*// 查账户信息的https地址
     private static String URI_GET_USER_INFO = ApiConfig.getUserInfoApi();
 
     //通用发送接口的https地址
@@ -43,7 +44,20 @@ public class YunpianSmsApi {
     //编码格式。发送编码格式统一用UTF-8
     private static String ENCODING = ApiConfig.getEncoding();
 
-    private static String API_KEY = ApiConfig.getApiKey();
+    private static String API_KEY = ApiConfig.getApiKey();*/
+
+    //账号
+    private static String USER_ID = ApiConfig.getUserId();
+
+    //密码
+    private static String PASSWORD = ApiConfig.getPassword();
+
+
+    //通用发送接口的http地址
+    private static String URI_SEND_SMS = ApiConfig.getUrl();
+
+    //编码格式。发送编码格式统一用UTF-8
+    private static String ENCODING = ApiConfig.getEncoding();
 
     //thread safe
     private static final CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -54,7 +68,7 @@ public class YunpianSmsApi {
      * @return json格式字符串
      * @throws java.io.IOException
      */
-    public static GetUserInfoResult getUserInfo() throws ApiException {
+    /*public static GetUserInfoResult getUserInfo() throws ApiException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("apikey", API_KEY);
         try {
@@ -63,7 +77,7 @@ public class YunpianSmsApi {
         } catch (Exception e) {
             throw new ApiException("Invoke Api Failed", e);
         }
-    }
+    }*/
 
     /**
      * 通用接口发短信
@@ -73,11 +87,12 @@ public class YunpianSmsApi {
      * @return json格式字符串
      * @throws IOException
      */
-    public static SendSmsResult sendSms(String text, String mobile) throws ApiException {
+    public static SendSmsResult sendSms(String text, String mobile) throws ApiException, UnsupportedEncodingException {
         Map<String, String> params = new HashMap<String, String>();
-        params.put("apikey", API_KEY);
-        params.put("text", text);
-        params.put("mobile", mobile);
+        params.put("UserId", USER_ID);
+        params.put("Password", PASSWORD);
+        params.put("Mobiles", mobile);
+        params.put("Content", URLEncoder.encode(text, ENCODING));
         try {
             String post = post(URI_SEND_SMS, params);
             return JsonUtil.fromJson(post, SendSmsResult.class);
@@ -95,7 +110,7 @@ public class YunpianSmsApi {
      * @return json格式字符串
      * @throws IOException
      */
-    public static SendSmsResult tplSendSms(long tpl_id, Map<String, String> tpl_value,
+    /*public static SendSmsResult tplSendSms(long tpl_id, Map<String, String> tpl_value,
                                            String mobile) throws ApiException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("apikey", API_KEY);
@@ -118,7 +133,7 @@ public class YunpianSmsApi {
         } catch (Exception e) {
             throw new ApiException("Invoke Api Failed", e);
         }
-    }
+    }*/
 
     /**
      * 基于HttpClient 4.3的通用POST方法
@@ -165,7 +180,7 @@ public class YunpianSmsApi {
      * @return json格式字符串
      * @throws IOException
      */
-    public static SendSmsResult sendVoice(String code, String mobile) throws ApiException {
+    /*public static SendSmsResult sendVoice(String code, String mobile) throws ApiException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("apikey", API_KEY);
         params.put("code", code);
@@ -176,6 +191,6 @@ public class YunpianSmsApi {
         } catch (Exception e) {
             throw new ApiException("Invoke Api Failed", e);
         }
-    }
+    }*/
 
 }

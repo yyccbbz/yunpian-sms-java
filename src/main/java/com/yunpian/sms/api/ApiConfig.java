@@ -17,7 +17,31 @@ public class ApiConfig {
         }
     }
 
-    public static final String getEncode() {
+
+    public static final String getUserId() {
+        return properties.getProperty("sms.userId");
+    }
+
+    public static final String getPassword() {
+        return properties.getProperty("sms.password");
+    }
+
+    public static final String getUrl() {
+        return properties.getProperty("sms.url");
+    }
+
+    public static final String getReport() {
+        return properties.getProperty("sms.send.report");
+    }
+
+    public static final String getEncoding() {
+        return properties.getProperty("sms.encoding");
+    }
+
+
+
+
+    /*public static final String getEncode() {
         return properties.getProperty("api.encoding");
     }
 
@@ -43,7 +67,7 @@ public class ApiConfig {
 
     public static final String getEncoding() {
         return properties.getProperty("api.encoding");
-    }
+    }*/
 
     public static void main(String[] args) {
         System.out.println(properties);
